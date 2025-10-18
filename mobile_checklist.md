@@ -9,7 +9,7 @@
 - [ ] Open Android Studio
 - [ ] New Project → Empty Activity (Compose)
 - [ ] Name: CarEcommerce
-- [ ] Package: com.yourname.carecommerce
+- [ ] Package: com.cars.cars_marketplace
 - [ ] Minimum SDK: 24 (Android 7.0)
 - [ ] Language: Kotlin
 - [ ] Build configuration: Kotlin DSL
@@ -83,7 +83,7 @@ plugins {
 
 ### Step 1.4: Create Package Structure
 ```
-com.yourname.carecommerce/
+com.cars.cars_marketplace/
 ├── data/
 │   ├── local/
 │   │   ├── dao/
