@@ -28,17 +28,34 @@ android {
                 "proguard-rules.pro"
             )
         }
+//        debug {
+//            // expose a build-time switch to choose fake vs real backend in code via BuildConfig.USE_FAKE
+//            // debug builds default to using the FakeApiService
+//            buildConfigField("boolean", "USE_FAKE", "true")
+//        }
+//        // ensure release explicitly disables the fake provider
+//        getByName("release") {
+//            buildConfigField("boolean", "USE_FAKE", "false")
+//        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+//    kotlin {
+//        jvmToolchain(11)
+//    }
+
+//    tasks.named<KotlinCompilationTask<*>>("compileKotlin").configure {
+//        compilerOptions { /*...*/ }
+//    }
     kotlinOptions {
         jvmTarget = "11"
 //        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
     buildFeatures {
         compose = true
+//        buildConfig = true
     }
 }
 
