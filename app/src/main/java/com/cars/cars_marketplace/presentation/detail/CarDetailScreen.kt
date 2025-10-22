@@ -49,8 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Speed
@@ -58,6 +56,8 @@ import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarBorder
 import kotlinx.coroutines.flow.collectLatest
 import java.util.Locale
 import androidx.compose.ui.graphics.Brush
@@ -265,10 +265,10 @@ private fun HeroImageSection(
                             }
                         )
                         
-                        // Favorite Button Overlay
+                        // Star Button Overlay (consistent with app theme)
                         Icon(
-                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Favorite",
+                            imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                            contentDescription = "Star",
                             tint = favTint,
                             modifier = Modifier
                                 .align(Alignment.TopEnd)
@@ -296,7 +296,7 @@ private fun HeroImageSection(
                                 animationSpec = tween(420)
                             )
                             Icon(
-                                imageVector = Icons.Filled.Favorite,
+                                imageVector = Icons.Filled.Star,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary.copy(alpha = burstAlpha),
                                 modifier = Modifier

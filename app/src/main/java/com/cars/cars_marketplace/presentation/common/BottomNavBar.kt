@@ -1,10 +1,9 @@
 package com.cars.cars_marketplace.presentation.common
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.DirectionsCar
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.SmartToy
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -16,6 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.cars.cars_marketplace.presentation.navigation.Screen
+import com.cars.cars_marketplace.presentation.common.AnimatedIcon
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.rotate
 
 private data class BottomNavigationItem(
         val screen: Screen,
@@ -29,18 +34,18 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
             listOf(
                     BottomNavigationItem(
                             screen = Screen.Home,
-                            label = "Home",
-                            icon = Icons.Filled.Home
+                            label = "Cars",
+                            icon = Icons.Filled.DirectionsCar
                     ),
                     BottomNavigationItem(
                             screen = Screen.Favorites,
-                            label = "Favorites",
-                            icon = Icons.Filled.Favorite
+                            label = "Stars",
+                            icon = Icons.Filled.Star
                     ),
                     BottomNavigationItem(
                             screen = Screen.Chat,
-                            label = "Chat",
-                            icon = Icons.Filled.Chat
+                            label = "AI",
+                            icon = Icons.Filled.SmartToy
                     )
             )
 
@@ -49,21 +54,25 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
         contentColor = MaterialTheme.colorScheme.onSurface,
         tonalElevation = 0.dp
     ) {
-        items.forEach { item ->
-            NavigationBarItem(
-                selected = currentRoute == item.screen.route,
-                onClick = { onNavigate(item.screen.route) },
-                icon = { 
-                    Icon(
-                        imageVector = item.icon, 
-                        contentDescription = item.label,
-                        tint = if (currentRoute == item.screen.route) 
-                            MaterialTheme.colorScheme.primary 
-                        else 
-                            MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(24.dp)
-                    ) 
-                },
+                items.forEach { item ->
+                    val isSelected = currentRoute == item.screen.route
+                    
+                    NavigationBarItem(
+                            selected = isSelected,
+                            onClick = { onNavigate(item.screen.route) },
+                            icon = { 
+                                AnimatedIcon(
+                                    icon = item.icon,
+                                    contentDescription = item.label,
+                                    size = 26.dp,
+                                    tint = if (isSelected) 
+                                        MaterialTheme.colorScheme.primary 
+                                    else 
+                                        MaterialTheme.colorScheme.onSurfaceVariant,
+                                    onClick = { onNavigate(item.screen.route) },
+                                    enableMicroInteractions = true
+                                )
+                            },
                 label = { 
                     Text(
                         item.label,

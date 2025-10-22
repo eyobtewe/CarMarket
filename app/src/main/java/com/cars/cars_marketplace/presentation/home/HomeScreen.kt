@@ -18,11 +18,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.SearchOff
+import androidx.compose.material.icons.filled.Delete
+import com.cars.cars_marketplace.presentation.common.AnimatedIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -61,21 +59,24 @@ fun HomeScreen(
                     ) 
                 },
                 leadingIcon = {
-                    Icon(
-                        Icons.Filled.Search,
+                    AnimatedIcon(
+                        icon = Icons.Filled.SearchOff,
                         contentDescription = "Search",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        size = 20.dp,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        enableMicroInteractions = true
                     )
                 },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
-                        IconButton(onClick = { viewModel.updateQuery("") }) {
-                            Icon(
-                                Icons.Filled.Clear,
-                                contentDescription = "Clear",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
+                        AnimatedIcon(
+                            icon = Icons.Filled.Delete,
+                            contentDescription = "Clear",
+                            size = 20.dp,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            onClick = { viewModel.updateQuery("") },
+                            enableMicroInteractions = true
+                        )
                     }
                 },
                 modifier = Modifier

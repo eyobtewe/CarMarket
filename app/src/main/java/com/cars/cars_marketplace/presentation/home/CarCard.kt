@@ -3,6 +3,7 @@ package com.cars.cars_marketplace.presentation.home
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.ui.draw.rotate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,8 +40,10 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.cars.cars_marketplace.domain.model.Car
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarBorder
+// Super cool animated icons
+import com.cars.cars_marketplace.presentation.common.PulsingIcon
 import java.util.Locale
 
 @Composable
@@ -127,28 +130,18 @@ fun CarCard(
                         )
                     }
                     
-                    // Favorite icon (toggle) with subtle scale animation
-                    val scale by animateFloatAsState(targetValue = if (isFavorite) 1.15f else 1f, animationSpec = tween(durationMillis = 220))
-                    IconButton(onClick = { if (!isPending) onFavoriteClick() }, enabled = !isPending) {
-                        if (isFavorite) {
-                            Icon(
-                                imageVector = Icons.Filled.Favorite,
-                                contentDescription = "Unfavorite",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .scale(scale)
+                            // Super cool pulsing star icon
+                            PulsingIcon(
+                                icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                                contentDescription = if (isFavorite) "Unstar" else "Star",
+                                size = 24.dp,
+                                tint = if (isFavorite) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurfaceVariant,
+                                isActive = isFavorite,
+                                onClick = { if (!isPending) onFavoriteClick() }
                             )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Favorite",
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .scale(scale)
-                            )
-                        }
-                    }
                 }
                 
                 Spacer(modifier = Modifier.height(12.dp))

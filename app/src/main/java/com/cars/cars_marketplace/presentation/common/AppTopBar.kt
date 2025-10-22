@@ -30,7 +30,7 @@ fun AppTopBar() {
             horizontalArrangement = Arrangement.Start
         ) {
             Text(
-                "Car Marketplace", 
+                "AutoHub", 
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface

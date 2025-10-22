@@ -58,25 +58,45 @@ class ChatViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     lastFailedMessage = null
+                    // Create a short summary for the AI message
+                    val fullMessage = result.data.data.message
+                    val shortSummary = if (fullMessage.length > 100) {
+                        fullMessage.substring(0, 100) + "..."
+                    } else {
+                        fullMessage
+                    }
+                    
                     val aiMessage = ChatMessage(
                         id = UUID.randomUUID().toString(),
-                        content = result.data.message,
+                        content = shortSummary,
                         isUser = false,
                         timestamp = System.currentTimeMillis()
                     )
                     _messages.value = _messages.value + aiMessage
                     
                     // Update recommended cars if any
-                    if (result.data.recommendedCars.isNotEmpty()) {
-                        // Convert SimpleCar to Car (with minimal data)
-                        val cars = result.data.recommendedCars.map { simpleCar ->
+                    if (result.data.data.recommendedCars.isNotEmpty()) {
+                        // Convert CarDto to Car
+                        val cars = result.data.data.recommendedCars.map { carDto ->
                             Car(
-                                id = simpleCar.id,
-                                make = simpleCar.make,
-                                model = simpleCar.model,
-                                year = 0, // Not available in SimpleCar
-                                price = 0.0, // Not available in SimpleCar
-                                description = "Recommended by AI"
+                                id = carDto.id,
+                                make = carDto.make,
+                                model = carDto.model,
+                                year = carDto.year,
+                                price = carDto.price,
+                                bodyType = carDto.bodyType,
+                                mileage = carDto.mileage,
+                                color = carDto.color,
+                                description = carDto.description,
+                                images = carDto.images,
+                                transmission = carDto.transmission,
+                                fuelType = carDto.fuelType,
+                                features = carDto.features,
+                                location = carDto.location,
+                                status = carDto.status,
+                                userId = carDto.userId,
+                                createdAt = carDto.createdAt,
+                                updatedAt = carDto.updatedAt
                             )
                         }
                         _recommendedCars.value = cars

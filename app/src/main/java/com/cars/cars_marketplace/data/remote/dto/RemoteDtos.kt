@@ -35,6 +35,15 @@ data class ApiResponse(val success: Boolean, val message: String? = null)
 // AI
 data class AiChatRequest(val message: String)
 
-data class AiChatResponse(val message: String, val recommendedCars: List<SimpleCar> = emptyList())
+data class AiChatResponse(
+    val message: String, 
+    val data: AiChatData, 
+    val success: Boolean
+)
+
+data class AiChatData(
+    val message: String,
+    val recommendedCars: List<CarDto>
+)
 
 data class SimpleCar(val id: String, val make: String, val model: String)
