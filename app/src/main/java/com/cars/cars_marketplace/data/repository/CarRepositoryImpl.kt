@@ -18,7 +18,16 @@ class CarRepositoryImpl @Inject constructor(
     private val carDao: CarDao
 ) : CarRepository {
 
-    override fun getCars(page: Int, limit: Int): Flow<Resource<List<Car>>> = flow {
+    override fun getCars(
+        page: Int,
+        limit: Int,
+        make: String?,
+        model: String?,
+        minPrice: Int?,
+        maxPrice: Int?,
+        year: Int?,
+        bodyType: String?
+    ): Flow<Resource<List<Car>>> = flow {
         emit(Resource.Loading())
 
         // Emit cached snapshot if available
@@ -33,8 +42,15 @@ class CarRepositoryImpl @Inject constructor(
 
         // Try to fetch remote and update DB
         try {
-            val response = api.getCars(page = page, limit = limit)
-            val entities = response.items.map { it.toEntity() }
+            val response = api.getCars(
+                page = page,
+                limit = limit,
+                make = make,
+                bodyType = bodyType,
+                minPrice = minPrice,
+                maxPrice = maxPrice
+            )
+            val entities = response.data.rows.map { it.toEntity() }
             carDao.insertCars(entities)
 
             val latest = carDao.getAllCars().first()
@@ -43,6 +59,20 @@ class CarRepositoryImpl @Inject constructor(
             emit(Resource.Error<List<Car>>(e.message ?: "Unknown error", e))
         }
     }.catch { e -> emit(Resource.Error<List<Car>>(e.message, e)) }
+    
+    override fun searchCars(query: String): Flow<Resource<List<Car>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.searchCars(query)
+            val cars = response.data.map { it.toDomain() } // Use direct mapping to preserve all fields
+            // Update cache with search results (convert to entities for storage)
+            val entities = response.data.map { it.toEntity() }
+            carDao.insertCars(entities)
+            emit(Resource.Success(cars))
+        } catch (e: Exception) {
+            emit(Resource.Error<List<Car>>(e.message ?: "Unknown error", e))
+        }
+    }
 
     override fun getCarById(id: String): Flow<Resource<Car>> = flow {
         // Try DB first
@@ -66,7 +96,7 @@ class CarRepositoryImpl @Inject constructor(
     override suspend fun refreshCars(page: Int, limit: Int): Resource<Unit> {
         return try {
             val response = api.getCars(page = page, limit = limit)
-            val entities = response.items.map { it.toEntity() }
+            val entities = response.data.rows.map { it.toEntity() }
             carDao.insertCars(entities)
             Resource.Success(Unit)
         } catch (e: Exception) {

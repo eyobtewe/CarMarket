@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -49,9 +50,12 @@ android {
 //    tasks.named<KotlinCompilationTask<*>>("compileKotlin").configure {
 //        compilerOptions { /*...*/ }
 //    }
-    kotlinOptions {
-        jvmTarget = "11"
-//        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
+    // Use the new Kotlin compilerOptions DSL (replaces deprecated kotlinOptions.jvmTarget)
+    kotlin {
+        compilerOptions {
+            // target JVM 11
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
     buildFeatures {
         compose = true
@@ -80,7 +84,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 //    kapt("androidx.room:room-compiler:2.6.1")
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.work.runtime.ktx)
@@ -88,8 +92,13 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 //    kapt("androidx.hilt:hilt-compiler:1.1.0")
     implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
     implementation(libs.androidx.datastore.preferences)
+    // Twitter-style fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
     testImplementation(libs.junit)
+    // MockWebServer for unit/integration tests
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

@@ -7,7 +7,24 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetCarsUseCase @Inject constructor(private val repository: CarRepository) {
-    operator fun invoke(page: Int = 1, limit: Int = 50): Flow<Resource<List<Car>>> =
-        repository.getCars(page, limit)
+    operator fun invoke(
+        page: Int = 1,
+        limit: Int = 50,
+        make: String? = null,
+        model: String? = null,
+        minPrice: Int? = null,
+        maxPrice: Int? = null,
+        year: Int? = null,
+        bodyType: String? = null
+    ): Flow<Resource<List<Car>>> = repository.getCars(
+        page = page,
+        limit = limit,
+        make = make,
+        model = model,
+        minPrice = minPrice,
+        maxPrice = maxPrice,
+        year = year,
+        bodyType = bodyType
+    )
 }
 

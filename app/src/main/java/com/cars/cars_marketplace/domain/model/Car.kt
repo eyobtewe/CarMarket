@@ -10,6 +10,14 @@ data class Car(
     val mileage: Int? = null,
     val color: String? = null,
     val description: String? = null,
-    val images: List<String> = emptyList()
+    val images: List<String> = emptyList(),
+    val transmission: String? = null,
+    val fuelType: String? = null,
+    val features: List<String> = emptyList(),
+    val location: String? = null,
+    val status: String? = null,
+    val userId: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null
 )
 

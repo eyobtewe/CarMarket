@@ -1,36 +1,35 @@
 package com.cars.cars_marketplace.data.remote.dto
 
-// Auth
-data class LoginRequest(val email: String, val password: String)
-data class RegisterRequest(val firstName: String, val lastName: String, val email: String, val password: String)
-
-data class AuthResponse(val token: String, val user: UserDto)
-
-data class UserDto(val id: String, val firstName: String, val lastName: String, val email: String)
-
 // Car DTOs
 data class CarDto(
-    val id: String,
-    val make: String,
-    val model: String,
-    val year: Int,
-    val price: Double,
-    val bodyType: String? = null,
-    val mileage: Int? = null,
-    val color: String? = null,
-    val description: String? = null,
-    val images: List<String> = emptyList()
+        val id: String,
+        val make: String,
+        val model: String,
+        val year: Int,
+        val price: Double,
+        val bodyType: String? = null,
+        val mileage: Int? = null,
+        val color: String? = null,
+        val description: String? = null,
+        val images: List<String> = emptyList(),
+        val transmission: String? = null,
+        val fuelType: String? = null,
+        val features: List<String> = emptyList(),
+        val location: String? = null,
+        val status: String? = null,
+        val userId: String? = null,
+        val createdAt: String? = null,
+        val updatedAt: String? = null
 )
 
-data class CarsResponse(
-    val items: List<CarDto> = emptyList(),
-    val page: Int = 1,
-    val total: Int = 0
-)
+data class CarsResponse(val message: String, val data: CarsData, val success: Boolean)
 
-// Favorites and generic responses
-data class FavoriteRequest(val carId: String)
+data class CarsData(val count: Int, val rows: List<CarDto>)
 
+// Search API returns data as direct array, not nested in rows
+data class SearchResponse(val message: String, val data: List<CarDto>, val success: Boolean)
+
+// Generic responses
 data class ApiResponse(val success: Boolean, val message: String? = null)
 
 // AI
@@ -39,4 +38,3 @@ data class AiChatRequest(val message: String)
 data class AiChatResponse(val message: String, val recommendedCars: List<SimpleCar> = emptyList())
 
 data class SimpleCar(val id: String, val make: String, val model: String)
-
