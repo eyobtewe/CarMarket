@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -77,6 +78,7 @@ dependencies {
     // Super cool Lottie animations
     implementation("com.airbnb.android:lottie-compose:6.1.0")
     implementation(libs.androidx.navigation.compose)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 //    kapt("com.google.dagger:hilt-android-compiler:2.48")

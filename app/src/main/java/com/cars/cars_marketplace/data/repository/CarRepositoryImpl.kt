@@ -1,8 +1,7 @@
 package com.cars.cars_marketplace.data.repository
 
 import com.cars.cars_marketplace.data.local.dao.CarDao
-import com.cars.cars_marketplace.data.mapper.toDomain
-import com.cars.cars_marketplace.data.mapper.toEntity
+import com.cars.cars_marketplace.data.mapper.*
 import com.cars.cars_marketplace.data.remote.api.ApiService
 import com.cars.cars_marketplace.domain.model.Car
 import com.cars.cars_marketplace.domain.model.Resource
@@ -34,7 +33,7 @@ class CarRepositoryImpl @Inject constructor(
         try {
             val cached = carDao.getAllCars().first()
             if (cached.isNotEmpty()) {
-                emit(Resource.Success(cached.map { it.toDomain() }))
+                emit(Resource.Success(cached.toDomainCarsFromEntities()))
             }
         } catch (_: Exception) {
             // ignore cache read errors
@@ -50,11 +49,11 @@ class CarRepositoryImpl @Inject constructor(
                 minPrice = minPrice,
                 maxPrice = maxPrice
             )
-            val entities = response.data.rows.map { it.toEntity() }
+            val entities = response.data.rows.map { it.toDomain().toEntity() }
             carDao.insertCars(entities)
 
             val latest = carDao.getAllCars().first()
-            emit(Resource.Success(latest.map { it.toDomain() }))
+            emit(Resource.Success(latest.toDomainCarsFromEntities()))
         } catch (e: Exception) {
             emit(Resource.Error<List<Car>>(e.message ?: "Unknown error", e))
         }
@@ -64,9 +63,9 @@ class CarRepositoryImpl @Inject constructor(
         emit(Resource.Loading())
         try {
             val response = api.searchCars(query)
-            val cars = response.data.map { it.toDomain() } // Use direct mapping to preserve all fields
+            val cars = response.data.toDomainCars() // Use direct mapping to preserve all fields
             // Update cache with search results (convert to entities for storage)
-            val entities = response.data.map { it.toEntity() }
+            val entities = response.data.map { it.toDomain().toEntity() }
             carDao.insertCars(entities)
             emit(Resource.Success(cars))
         } catch (e: Exception) {
@@ -85,7 +84,7 @@ class CarRepositoryImpl @Inject constructor(
         // Not in DB — fetch remote
         try {
             val dto = api.getCarById(id)
-            val entity = dto.toEntity()
+            val entity = dto.toDomain().toEntity()
             carDao.insertCars(listOf(entity))
             emit(Resource.Success(entity.toDomain()))
         } catch (e: Exception) {
@@ -96,7 +95,7 @@ class CarRepositoryImpl @Inject constructor(
     override suspend fun refreshCars(page: Int, limit: Int): Resource<Unit> {
         return try {
             val response = api.getCars(page = page, limit = limit)
-            val entities = response.data.rows.map { it.toEntity() }
+            val entities = response.data.rows.map { it.toDomain().toEntity() }
             carDao.insertCars(entities)
             Resource.Success(Unit)
         } catch (e: Exception) {

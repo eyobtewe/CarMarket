@@ -20,8 +20,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.cars.cars_marketplace.presentation.common.AppTopBar
 import com.cars.cars_marketplace.presentation.common.BottomNavBar
-import com.cars.cars_marketplace.presentation.navigation.AppNavHost
+import com.cars.cars_marketplace.presentation.navigation.TypeSafeNavHost
 import com.cars.cars_marketplace.presentation.navigation.Screen
+import com.cars.cars_marketplace.presentation.navigation.navigateTo
 import com.cars.cars_marketplace.presentation.theme.ThemeViewModel
 import com.cars.cars_marketplace.ui.theme.CarMarketTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,36 +40,27 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
+                
+                // Check if we're on a main screen (Home, Favorites, or Chat)
+                val isMainScreen = currentRoute?.contains("Screen.Home") == true ||
+                                 currentRoute?.contains("Screen.Favorites") == true ||
+                                 currentRoute?.contains("Screen.Chat") == true
 
                 Scaffold(
                         topBar = {
-                            if (currentRoute in
-                                            listOf(
-                                                    Screen.Home.route,
-                                                    Screen.Favorites.route,
-                                                    Screen.Chat.route
-                                            )
-                            ) {
+                            if (isMainScreen) {
                                 AppTopBar()
                             }
                         },
                         bottomBar = {
-                            if (currentRoute in
-                                            listOf(
-                                                    Screen.Home.route,
-                                                    Screen.Favorites.route,
-                                                    Screen.Chat.route
-                                            )
-                            ) {
+                            if (isMainScreen) {
                                 BottomNavBar(
                                         currentRoute = currentRoute,
-                                        onNavigate = {
-                                            navController.navigate(it) {
-                                                launchSingleTop = true
-                                                restoreState = true
-                                                popUpTo(navController.graph.startDestinationId) {
-                                                    saveState = true
-                                                }
+                                        onNavigate = { route ->
+                                            when (route) {
+                                                "home" -> navController.navigateTo(Screen.Home)
+                                                "favorites" -> navController.navigateTo(Screen.Favorites)
+                                                "chat" -> navController.navigateTo(Screen.Chat)
                                             }
                                         }
                                 )
@@ -77,7 +69,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentWindowInsets = WindowInsets.safeDrawing
                 ) { innerPadding ->
-                    AppNavHost(
+                    TypeSafeNavHost(
                             navController = navController,
                             modifier = Modifier.padding(innerPadding)
                     )

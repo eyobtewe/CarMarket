@@ -10,11 +10,17 @@ import com.cars.cars_marketplace.presentation.detail.CarDetailScreen
 import com.cars.cars_marketplace.presentation.favorites.FavoritesScreen
 import com.cars.cars_marketplace.presentation.home.HomeScreen
 
+/**
+ * Type-safe NavHost wrapper for Navigation 3
+ */
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun TypeSafeNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = Screen.Home,
         modifier = modifier
     ) {
         composable<Screen.Home> {

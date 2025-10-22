@@ -2,10 +2,12 @@ package com.cars.cars_marketplace.presentation.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cars.cars_marketplace.data.mapper.AiMappers.toDomainCars
 import com.cars.cars_marketplace.domain.model.Car
 import com.cars.cars_marketplace.domain.model.ChatMessage
 import com.cars.cars_marketplace.domain.model.Resource
 import com.cars.cars_marketplace.domain.usecase.SendChatMessageUseCase
+import com.cars.cars_marketplace.presentation.common.ui.ChatUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,12 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
-
-sealed interface ChatUiState {
-    object Idle : ChatUiState
-    object Loading : ChatUiState
-    data class Error(val message: String) : ChatUiState
-}
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
@@ -76,29 +72,8 @@ class ChatViewModel @Inject constructor(
                     
                     // Update recommended cars if any
                     if (result.data.data.recommendedCars.isNotEmpty()) {
-                        // Convert CarDto to Car
-                        val cars = result.data.data.recommendedCars.map { carDto ->
-                            Car(
-                                id = carDto.id,
-                                make = carDto.make,
-                                model = carDto.model,
-                                year = carDto.year,
-                                price = carDto.price,
-                                bodyType = carDto.bodyType,
-                                mileage = carDto.mileage,
-                                color = carDto.color,
-                                description = carDto.description,
-                                images = carDto.images,
-                                transmission = carDto.transmission,
-                                fuelType = carDto.fuelType,
-                                features = carDto.features,
-                                location = carDto.location,
-                                status = carDto.status,
-                                userId = carDto.userId,
-                                createdAt = carDto.createdAt,
-                                updatedAt = carDto.updatedAt
-                            )
-                        }
+                        // Convert CarDto to Car using mapper
+                        val cars = result.data.data.recommendedCars.toDomainCars()
                         _recommendedCars.value = cars
                     }
                     

@@ -32,6 +32,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.cars.cars_marketplace.presentation.navigation.Screen
+import com.cars.cars_marketplace.presentation.navigation.navigateTo
+import com.cars.cars_marketplace.presentation.common.ui.ChatUiState
 import coil.compose.AsyncImage
 import com.cars.cars_marketplace.domain.model.Car
 import com.cars.cars_marketplace.domain.model.ChatMessage
@@ -81,7 +84,7 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = hiltView
                     item {
                         TwitterRecommendedSection(
                             recommendedCars = recommendedCars,
-                            onCarClick = { carId -> navController.navigate("detail/$carId") }
+                            onCarClick = { carId -> navController.navigateTo(Screen.CarDetail(carId)) }
                         )
                     }
                 }

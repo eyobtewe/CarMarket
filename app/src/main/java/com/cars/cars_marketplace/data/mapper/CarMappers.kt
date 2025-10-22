@@ -4,74 +4,81 @@ import com.cars.cars_marketplace.data.local.entity.CarEntity
 import com.cars.cars_marketplace.data.remote.dto.CarDto
 import com.cars.cars_marketplace.domain.model.Car
 
-private const val IMAGE_DELIMITER = "|"
-
-fun CarDto.toEntity(): CarEntity = CarEntity(
-    id = this.id,
-    make = this.make,
-    model = this.model,
-    year = this.year,
-    price = this.price,
-    bodyType = this.bodyType,
-    mileage = this.mileage,
-    color = this.color,
-    description = this.description,
-    imagesSerialized = this.images.joinToString(IMAGE_DELIMITER)
-)
-
-fun CarEntity.toDomain(): Car = Car(
-    id = this.id,
-    make = this.make,
-    model = this.model,
-    year = this.year,
-    price = this.price,
-    bodyType = this.bodyType,
-    mileage = this.mileage,
-    color = this.color,
-    description = this.description,
-    images = if (this.imagesSerialized.isBlank()) emptyList() else this.imagesSerialized.split(IMAGE_DELIMITER),
-    transmission = null, // Not stored in entity yet
-    fuelType = null, // Not stored in entity yet
-    features = emptyList(), // Not stored in entity yet
-    location = null, // Not stored in entity yet
-    status = null, // Not stored in entity yet
-    userId = null, // Not stored in entity yet
-    createdAt = null, // Not stored in entity yet
-    updatedAt = null // Not stored in entity yet
-)
-
-fun Car.toEntity(): CarEntity = CarEntity(
-    id = this.id,
-    make = this.make,
-    model = this.model,
-    year = this.year,
-    price = this.price,
-    bodyType = this.bodyType,
-    mileage = this.mileage,
-    color = this.color,
-    description = this.description,
-    imagesSerialized = this.images.joinToString(IMAGE_DELIMITER)
-)
-
-// Direct mapping from DTO to Domain for search results
+/**
+ * Maps CarDto to domain Car model
+ */
 fun CarDto.toDomain(): Car = Car(
-    id = this.id,
-    make = this.make,
-    model = this.model,
-    year = this.year,
-    price = this.price,
-    bodyType = this.bodyType,
-    mileage = this.mileage,
-    color = this.color,
-    description = this.description,
-    images = this.images,
-    transmission = this.transmission,
-    fuelType = this.fuelType,
-    features = this.features,
-    location = this.location,
-    status = this.status,
-    userId = this.userId,
-    createdAt = this.createdAt,
-    updatedAt = this.updatedAt
-)
+        id = id,
+        make = make,
+        model = model,
+        year = year,
+        price = price,
+        bodyType = bodyType,
+        mileage = mileage,
+        color = color,
+        description = description,
+        images = images,
+        transmission = transmission,
+        fuelType = fuelType,
+        features = features,
+        location = location,
+        status = status,
+        userId = userId,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
 
+/**
+ * Maps domain Car to CarEntity for local storage
+ */
+fun Car.toEntity(): CarEntity = CarEntity(
+        id = id,
+        make = make,
+        model = model,
+        year = year,
+        price = price,
+        bodyType = bodyType,
+        mileage = mileage,
+        color = color,
+        description = description,
+        imagesSerialized = images.joinToString("|")
+    )
+
+/**
+ * Maps CarEntity to domain Car model
+ */
+fun CarEntity.toDomain(): Car = Car(
+        id = id,
+        make = make,
+        model = model,
+        year = year,
+        price = price,
+        bodyType = bodyType,
+        mileage = mileage,
+        color = color,
+        description = description,
+        images = if (imagesSerialized.isNotEmpty()) imagesSerialized.split("|") else emptyList(),
+        transmission = null, // Not stored in entity
+        fuelType = null, // Not stored in entity
+        features = emptyList(), // Not stored in entity
+        location = null, // Not stored in entity
+        status = null, // Not stored in entity
+        userId = null, // Not stored in entity
+        createdAt = null, // Not stored in entity
+        updatedAt = null // Not stored in entity
+    )
+
+/**
+ * Maps list of CarDtos to domain Cars
+ */
+fun List<CarDto>.toDomainCars(): List<Car> = map { it.toDomain() }
+
+/**
+ * Maps list of CarEntities to domain Cars
+ */
+fun List<CarEntity>.toDomainCarsFromEntities(): List<Car> = map { it.toDomain() }
+
+/**
+ * Maps list of domain Cars to CarEntities
+ */
+fun List<Car>.toEntity(): List<CarEntity> = map { it.toEntity() }

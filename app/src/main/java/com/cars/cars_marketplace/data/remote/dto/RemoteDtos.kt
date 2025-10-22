@@ -1,49 +1,9 @@
 package com.cars.cars_marketplace.data.remote.dto
 
-// Car DTOs
-data class CarDto(
-        val id: String,
-        val make: String,
-        val model: String,
-        val year: Int,
-        val price: Double,
-        val bodyType: String? = null,
-        val mileage: Int? = null,
-        val color: String? = null,
-        val description: String? = null,
-        val images: List<String> = emptyList(),
-        val transmission: String? = null,
-        val fuelType: String? = null,
-        val features: List<String> = emptyList(),
-        val location: String? = null,
-        val status: String? = null,
-        val userId: String? = null,
-        val createdAt: String? = null,
-        val updatedAt: String? = null
-)
+// This file is deprecated - DTOs have been moved to separate files:
+// - CarDtos.kt for car-related DTOs
+// - AiDtos.kt for AI chat DTOs  
+// - CommonDtos.kt for generic API responses
 
-data class CarsResponse(val message: String, val data: CarsData, val success: Boolean)
-
-data class CarsData(val count: Int, val rows: List<CarDto>)
-
-// Search API returns data as direct array, not nested in rows
-data class SearchResponse(val message: String, val data: List<CarDto>, val success: Boolean)
-
-// Generic responses
-data class ApiResponse(val success: Boolean, val message: String? = null)
-
-// AI
-data class AiChatRequest(val message: String)
-
-data class AiChatResponse(
-    val message: String, 
-    val data: AiChatData, 
-    val success: Boolean
-)
-
-data class AiChatData(
-    val message: String,
-    val recommendedCars: List<CarDto>
-)
-
-data class SimpleCar(val id: String, val make: String, val model: String)
+// Keeping this file temporarily for backward compatibility
+// TODO: Remove this file after updating all imports

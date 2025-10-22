@@ -1,10 +1,6 @@
 package com.cars.cars_marketplace.data.remote.api
 
-import com.cars.cars_marketplace.data.remote.dto.AiChatRequest
-import com.cars.cars_marketplace.data.remote.dto.AiChatResponse
-import com.cars.cars_marketplace.data.remote.dto.CarDto
-import com.cars.cars_marketplace.data.remote.dto.CarsResponse
-import com.cars.cars_marketplace.data.remote.dto.SearchResponse
+import com.cars.cars_marketplace.data.remote.dto.*
 import retrofit2.http.*
 
 interface ApiService {

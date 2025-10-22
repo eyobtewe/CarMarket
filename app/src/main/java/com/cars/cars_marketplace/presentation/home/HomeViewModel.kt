@@ -8,6 +8,7 @@ import com.cars.cars_marketplace.domain.usecase.GetCarsUseCase
 import com.cars.cars_marketplace.domain.usecase.GetFavoritesUseCase
 import com.cars.cars_marketplace.domain.usecase.SearchCarsUseCase
 import com.cars.cars_marketplace.domain.usecase.ToggleFavoriteUseCase
+import com.cars.cars_marketplace.presentation.common.ui.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,12 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
-
-sealed interface HomeUiState {
-    object Loading : HomeUiState
-    data class Success(val cars: List<Car>) : HomeUiState
-    data class Error(val message: String) : HomeUiState
-}
 
 @HiltViewModel
 class HomeViewModel

@@ -7,18 +7,13 @@ import com.cars.cars_marketplace.domain.model.Resource
 import com.cars.cars_marketplace.domain.usecase.GetCarByIdUseCase
 import com.cars.cars_marketplace.domain.usecase.IsFavoriteUseCase
 import com.cars.cars_marketplace.domain.usecase.ToggleFavoriteUseCase
+import com.cars.cars_marketplace.presentation.common.ui.CarDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface CarDetailUiState {
-    object Loading : CarDetailUiState
-    data class Success(val car: Car) : CarDetailUiState
-    data class Error(val message: String) : CarDetailUiState
-}
 
 @HiltViewModel
 class CarDetailViewModel @Inject constructor(

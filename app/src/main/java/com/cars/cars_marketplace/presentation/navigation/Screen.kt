@@ -1,10 +1,18 @@
 package com.cars.cars_marketplace.presentation.navigation
 
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object CarDetail : Screen("detail/{carId}") {
-        fun createRoute(carId: String) = "detail/$carId"
-    }
-    object Favorites : Screen("favorites")
-    object Chat : Screen("chat")
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class Screen {
+    @Serializable
+    object Home : Screen()
+    
+    @Serializable
+    data class CarDetail(val carId: String) : Screen()
+    
+    @Serializable
+    object Favorites : Screen()
+    
+    @Serializable
+    object Chat : Screen()
 }

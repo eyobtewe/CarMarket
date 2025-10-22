@@ -32,6 +32,7 @@ import com.cars.cars_marketplace.domain.model.Car
 import com.cars.cars_marketplace.presentation.common.LoadingIndicator
 import com.cars.cars_marketplace.presentation.common.ErrorMessage
 import com.cars.cars_marketplace.presentation.common.EmptyState
+import com.cars.cars_marketplace.presentation.common.ui.HomeUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

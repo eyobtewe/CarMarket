@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.cars.cars_marketplace.presentation.navigation.Screen
 import com.cars.cars_marketplace.presentation.common.AnimatedIcon
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -23,7 +22,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.rotate
 
 private data class BottomNavigationItem(
-        val screen: Screen,
+        val route: String,
         val label: String,
         val icon: ImageVector
 )
@@ -33,17 +32,17 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
     val items =
             listOf(
                     BottomNavigationItem(
-                            screen = Screen.Home,
+                            route = "home",
                             label = "Cars",
                             icon = Icons.Filled.DirectionsCar
                     ),
                     BottomNavigationItem(
-                            screen = Screen.Favorites,
+                            route = "favorites",
                             label = "Stars",
                             icon = Icons.Filled.Star
                     ),
                     BottomNavigationItem(
-                            screen = Screen.Chat,
+                            route = "chat",
                             label = "AI",
                             icon = Icons.Filled.SmartToy
                     )
@@ -55,11 +54,11 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
         tonalElevation = 0.dp
     ) {
                 items.forEach { item ->
-                    val isSelected = currentRoute == item.screen.route
+                    val isSelected = currentRoute == item.route
                     
                     NavigationBarItem(
                             selected = isSelected,
-                            onClick = { onNavigate(item.screen.route) },
+                            onClick = { onNavigate(item.route) },
                             icon = { 
                                 AnimatedIcon(
                                     icon = item.icon,
@@ -69,7 +68,7 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
                                         MaterialTheme.colorScheme.primary 
                                     else 
                                         MaterialTheme.colorScheme.onSurfaceVariant,
-                                    onClick = { onNavigate(item.screen.route) },
+                                    onClick = { onNavigate(item.route) },
                                     enableMicroInteractions = true
                                 )
                             },
@@ -77,7 +76,7 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
                     Text(
                         item.label,
                         style = MaterialTheme.typography.labelMedium,
-                        color = if (currentRoute == item.screen.route) 
+                        color = if (currentRoute == item.route) 
                             MaterialTheme.colorScheme.primary 
                         else 
                             MaterialTheme.colorScheme.onSurfaceVariant

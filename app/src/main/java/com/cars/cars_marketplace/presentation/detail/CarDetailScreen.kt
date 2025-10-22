@@ -47,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.cars.cars_marketplace.presentation.common.ui.CarDetailUiState
 import coil.compose.SubcomposeAsyncImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
