@@ -63,10 +63,10 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = hiltView
         contentWindowInsets = WindowInsets.safeDrawing
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
-            // Twitter-like header
-            TwitterChatHeader()
+            // Chat header
+            ChatHeader()
             
-            // Messages list with Twitter-like styling
+            // Messages list
             LazyColumn(
                 state = listState,
                 modifier = Modifier
@@ -76,13 +76,13 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = hiltView
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(messages, key = { it.id }) { message -> 
-                    TwitterMessageBubble(message = message) 
+                    MessageBubble(message = message) 
                 }
 
                 // AI Recommended Cars Section
                 if (recommendedCars.isNotEmpty()) {
                     item {
-                        TwitterRecommendedSection(
+                        RecommendedSection(
                             recommendedCars = recommendedCars,
                             onCarClick = { carId -> navController.navigateTo(Screen.CarDetail(carId)) }
                         )
@@ -90,13 +90,13 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = hiltView
                 }
             }
 
-            // Twitter-like typing indicator
+            // Typing indicator
             if (isTyping) {
-                TwitterTypingIndicator()
+                TypingIndicator()
             }
 
-            // Twitter-like input field
-            TwitterInputField(
+            // Input field
+            InputField(
                 messageText = messageText,
                 onMessageTextChange = { messageText = it },
                 onSendClick = {
@@ -110,7 +110,7 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = hiltView
 
             // Error handling
             if (uiState is ChatUiState.Error) {
-                TwitterErrorBanner(
+                ErrorBanner(
                     message = (uiState as ChatUiState.Error).message,
                     onRetry = { viewModel.retryLast() }
                 )
@@ -119,9 +119,9 @@ fun ChatScreen(navController: NavController, viewModel: ChatViewModel = hiltView
     }
 }
 
-// Twitter-like Chat Header
+// Chat Header
 @Composable
-fun TwitterChatHeader() {
+fun ChatHeader() {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surface,
@@ -167,9 +167,9 @@ fun TwitterChatHeader() {
     }
 }
 
-// Twitter-like Message Bubble
+// Message Bubble
 @Composable
-fun TwitterMessageBubble(message: ChatMessage) {
+fun MessageBubble(message: ChatMessage) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = if (message.isUser) Arrangement.End else Arrangement.Start
@@ -241,9 +241,9 @@ fun TwitterMessageBubble(message: ChatMessage) {
     }
 }
 
-// Twitter-like Typing Indicator
+// Typing Indicator
 @Composable
-fun TwitterTypingIndicator() {
+fun TypingIndicator() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -299,9 +299,9 @@ fun TwitterTypingIndicator() {
     }
 }
 
-// Twitter-like Input Field
+// Input Field
 @Composable
-fun TwitterInputField(
+fun InputField(
     messageText: String,
     onMessageTextChange: (String) -> Unit,
     onSendClick: () -> Unit,
@@ -363,9 +363,9 @@ fun TwitterInputField(
     }
 }
 
-// Twitter-like Error Banner
+// Error Banner
 @Composable
-fun TwitterErrorBanner(
+fun ErrorBanner(
     message: String,
     onRetry: () -> Unit
 ) {
@@ -401,9 +401,9 @@ fun TwitterErrorBanner(
     }
 }
 
-// Twitter-like Recommended Section
+// Recommended Section
 @Composable
-fun TwitterRecommendedSection(
+fun RecommendedSection(
     recommendedCars: List<Car>,
     onCarClick: (String) -> Unit
 ) {
@@ -469,7 +469,7 @@ fun TwitterRecommendedSection(
             
             // Recommended Cars - aligned with the header
             recommendedCars.forEach { car ->
-                TwitterRecommendedCarCard(
+                RecommendedCarCard(
                     car = car,
                     onClick = { onCarClick(car.id) }
                 )
@@ -478,9 +478,9 @@ fun TwitterRecommendedSection(
     }
 }
 
-// Twitter-like Recommended Car Card
+// Recommended Car Card
 @Composable
-fun TwitterRecommendedCarCard(car: Car, onClick: (String) -> Unit) {
+fun RecommendedCarCard(car: Car, onClick: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

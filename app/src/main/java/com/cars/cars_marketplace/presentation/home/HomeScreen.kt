@@ -49,7 +49,7 @@ fun HomeScreen(
         contentWindowInsets = WindowInsets.safeDrawing
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
-            // Twitter-like search bar
+            // Search bar
             OutlinedTextField(
                 value = query,
                 onValueChange = { viewModel.updateQuery(it) },

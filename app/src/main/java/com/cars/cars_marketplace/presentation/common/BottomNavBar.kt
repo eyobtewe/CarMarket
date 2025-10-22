@@ -33,17 +33,17 @@ fun BottomNavBar(currentRoute: String?, onNavigate: (String) -> Unit) {
             listOf(
                     BottomNavigationItem(
                             route = "home",
-                            label = "Cars",
+                            label = "Home",
                             icon = Icons.Filled.DirectionsCar
                     ),
                     BottomNavigationItem(
                             route = "favorites",
-                            label = "Stars",
+                            label = "Favorites",
                             icon = Icons.Filled.Star
                     ),
                     BottomNavigationItem(
                             route = "chat",
-                            label = "AI",
+                            label = "AI Assistant",
                             icon = Icons.Filled.SmartToy
                     )
             )

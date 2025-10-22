@@ -2,7 +2,6 @@ package com.cars.cars_marketplace.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cars.cars_marketplace.domain.model.Car
 import com.cars.cars_marketplace.domain.model.Resource
 import com.cars.cars_marketplace.domain.usecase.GetCarsUseCase
 import com.cars.cars_marketplace.domain.usecase.GetFavoritesUseCase
@@ -67,10 +66,10 @@ constructor(
 
     fun updateQuery(q: String) {
         _query.value = q
-        // Twitter-like search: search as you type with debounce
+        // Search as you type with debounce
         if (q.trim().isNotEmpty()) {
             viewModelScope.launch {
-                delay(300) // 300ms debounce like Twitter
+                delay(300) // 300ms debounce
                 if (_query.value == q) { // Only search if query hasn't changed
                     applyFilters()
                 }
@@ -95,7 +94,7 @@ constructor(
         val q = _query.value.trim()
 
         if (q.isNotEmpty()) {
-            // Twitter-like search: use search API for queries
+            // Use search API for queries
             viewModelScope.launch {
                 _uiState.value = HomeUiState.Loading
                 searchCarsUseCase(q).collect { res ->

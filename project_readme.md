@@ -224,7 +224,10 @@ com.cars.cars_marketplace/
 4. **AI Chat Screen**: Interactive chat with AI assistant for recommendations
 5. **Navigation**: Bottom navigation between main screens
 
-*Note: Screenshots would be added here showing the actual UI flow*
+![Screenshot_20251022_150818.png](screenshots/Screenshot_20251022_150818.png)
+![Screenshot_20251022_150831.png](screenshots/Screenshot_20251022_150831.png)
+![Screenshot_20251022_150840.png](screenshots/Screenshot_20251022_150840.png)
+![Screenshot_20251022_154546.png](screenshots/Screenshot_20251022_154546.png)
 
 ## 9. Setup Instructions
 

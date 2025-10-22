@@ -16,12 +16,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
-// Using default font family for now (very close to Twitter's font)
-private val TwitterFontFamily = FontFamily.Default
+import androidx.compose.ui.text.font.Font
+import com.cars.cars_marketplace.R
 
-// Twitter's exact color scheme
+// Montserrat font family
+private val MontserratFontFamily = FontFamily(
+    Font(R.font.montserrat_light, FontWeight.Light),
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_bold, FontWeight.Bold)
+)
+
+// App color scheme
 private val LightColorScheme = lightColorScheme(
-    primary = androidx.compose.ui.graphics.Color(0xFF1D9BF0), // Twitter's current blue
+    primary = androidx.compose.ui.graphics.Color(0xFF1D9BF0), // App primary blue
     onPrimary = androidx.compose.ui.graphics.Color.White,
     secondary = androidx.compose.ui.graphics.Color(0xFF1D9BF0),
     onSecondary = androidx.compose.ui.graphics.Color.White,
@@ -41,9 +49,9 @@ private val LightColorScheme = lightColorScheme(
     onErrorContainer = androidx.compose.ui.graphics.Color(0xFFF4212E),
 )
 
-// Twitter's dark mode color scheme
+// Dark mode color scheme
 private val DarkColorScheme = darkColorScheme(
-    primary = androidx.compose.ui.graphics.Color(0xFF1D9BF0), // Twitter's current blue
+    primary = androidx.compose.ui.graphics.Color(0xFF1D9BF0), // App primary blue
     onPrimary = androidx.compose.ui.graphics.Color.White,
     secondary = androidx.compose.ui.graphics.Color(0xFF1D9BF0),
     onSecondary = androidx.compose.ui.graphics.Color.White,
@@ -63,108 +71,108 @@ private val DarkColorScheme = darkColorScheme(
     onErrorContainer = androidx.compose.ui.graphics.Color(0xFFFFB3B3),
 )
 
-// Twitter's exact typography system
+// App typography system
 private val AppTypography = Typography(
     displayLarge = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
         lineHeight = 40.sp,
         letterSpacing = (-0.5).sp
     ),
     displayMedium = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp,
         lineHeight = 36.sp,
         letterSpacing = (-0.25).sp
     ),
     displaySmall = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp
     ),
     headlineLarge = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp
     ),
     titleLarge = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.sp
     ),
     titleSmall = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.sp
     ),
     bodyLarge = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp
     ),
     bodyMedium = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.sp
     ),
     bodySmall = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.sp
     ),
     labelLarge = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.sp
     ),
     labelMedium = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = TwitterFontFamily,
+        fontFamily = MontserratFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 10.sp,
         lineHeight = 14.sp,
@@ -172,7 +180,7 @@ private val AppTypography = Typography(
     )
 )
 
-// Twitter's exact shape system
+// App shape system
 private val AppShapes = Shapes(
     extraSmall = androidx.compose.foundation.shape.RoundedCornerShape(2.dp),
     small = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),

@@ -2,10 +2,6 @@ package com.cars.cars_marketplace.presentation.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavBackStackEntry
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-
-val json = Json { ignoreUnknownKeys = true }
 
 /**
  * Navigate to a screen with type-safe arguments
@@ -23,8 +19,16 @@ fun NavController.navigateTo(screen: Screen) {
  * Get the current route as a Screen object
  */
 inline fun <reified T : Screen> NavBackStackEntry.toRoute(): T {
-    val route = arguments?.getString("route") ?: ""
-    return json.decodeFromString(route)
+    return when (T::class) {
+        Screen.CarDetail::class -> {
+            val carId = arguments?.getString("carId") ?: ""
+            Screen.CarDetail(carId) as T
+        }
+        Screen.Home::class -> Screen.Home as T
+        Screen.Favorites::class -> Screen.Favorites as T
+        Screen.Chat::class -> Screen.Chat as T
+        else -> throw IllegalArgumentException("Unknown screen type: ${T::class}")
+    }
 }
 
 /**
